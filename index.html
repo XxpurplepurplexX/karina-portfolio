@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Karina, fotografa di matrimoni. Immagini senza tempo per storie d'amore autentiche.">
+  <title>Karina</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000000'/%3E%3Ctext x='32' y='32' dominant-baseline='central' text-anchor='middle' font-family='Georgia%2Cserif' font-size='46' fill='%23FFFFFF'%3EK%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Pinyon+Script&family=Viaoda+Libre&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --black: #000000;
+      --white: #FFFFFF;
+      --muted: #bdbdbd;
+      --serif: "Viaoda Libre", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+      --script: "Pinyon Script", cursive;
+    }
+
+    * { box-sizing: border-box; }
+  img { max-width: 100%; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: 100svh;
+      overflow: hidden;
+      place-items: center;
+      isolation: isolate;
+      background: var(--black);
+    }
+
+    .hero-image,
+    .hero-shade {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-image {
+      object-fit: cover;
+      object-position: center 48%;
+      filter: grayscale(100%);
+    }
+
+    .hero-shade {
+      background: linear-gradient(180deg, rgba(0, 0, 0, .62) 0%, rgba(0, 0, 0, .34) 38%, rgba(0, 0, 0, .53) 100%);
+    }
+
+    .navigation {
+      position: absolute;
+      inset: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 7vw;
+    }
+
+    .navigation ul {
+      display: flex;
+      gap: clamp(24px, 5vw, 72px);
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .navigation a {
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      transition: opacity .2s ease;
+    }
+
+    .navigation a:hover,
+    .navigation a:focus-visible { opacity: .62; }
+
+    .navigation a[aria-current="page"] { border-bottom: 1px solid var(--white); padding-bottom: 5px; }
+
+    .nav-toggle { display: none; }
+
+    .menu-open { overflow: hidden; }
+
+    .hero-copy {
+      width: min(100% - 40px, 900px);
+      padding-top: 28px;
+      text-align: center;
+      animation: arrive .9s ease-out both;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(100px, 20vw, 248px);
+      font-weight: 400;
+      line-height: .9;
+    }
+
+    .hero-copy p {
+      margin: 7px 0 0;
+      font-family: var(--script);
+      font-size: clamp(34px, 5.5vw, 58px);
+      line-height: 1.2;
+    }
+
+    .hero-note {
+      position: absolute;
+      right: 7vw;
+      bottom: 35px;
+      font-size: 10px;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+    main { padding: 0 7vw; }
+
+    .introduction {
+      display: grid;
+      grid-template-columns: 1fr minmax(250px, 460px) 1fr;
+      align-items: center;
+      padding: clamp(88px, 13vw, 170px) 0 clamp(76px, 10vw, 126px);
+    }
+
+    .intro-mark {
+      justify-self: start;
+      font-family: var(--serif);
+      font-size: 20px;
+      letter-spacing: .08em;
+    }
+
+    .intro-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 1.5vw, 18px);
+      line-height: 1.9;
+      text-align: center;
+    }
+
+    .intro-index {
+      justify-self: end;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .16em;
+    }
+
+    .gallery-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      border-bottom: 1px solid #3a3a3a;
+      padding-bottom: 14px;
+    }
+
+    .gallery-heading h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 400;
+    }
+
+    .gallery-heading span {
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .gallery figure { margin: 0; }
+
+    .gallery img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: filter .45s ease, transform .7s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .gallery figure { overflow: hidden; }
+    .gallery figure:hover img { transform: scale(1.025); }
+
+    .gallery figcaption {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 13px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: clamp(100px, 16vw, 190px) 20px 70px;
+      text-align: center;
+    }
+
+    .contact p {
+      margin: 0 0 15px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .contact a {
+      border-bottom: 1px solid var(--white);
+      padding-bottom: 8px;
+      font-family: var(--serif);
+      font-size: clamp(30px, 6vw, 58px);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #3a3a3a;
+      padding: 20px 0 24px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .has-scroll-reveal [data-reveal],
+    .has-scroll-reveal .gallery figure {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .has-scroll-reveal [data-reveal].is-visible,
+    .has-scroll-reveal .gallery figure.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 24px;
+      bottom: max(24px, env(safe-area-inset-bottom));
+      z-index: 20;
+      display: grid;
+      width: 48px;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid var(--white);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--black);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s, background-color .2s ease, color .2s ease;
+    }
+
+    .back-to-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: opacity .25s ease, transform .25s ease, visibility 0s, background-color .2s ease, color .2s ease;
+    }
+
+    .back-to-top:hover,
+    .back-to-top:focus-visible { background: var(--black); color: var(--white); }
+
+    .back-to-top:focus-visible { outline: 1px solid var(--white); outline-offset: 4px; }
+
+    .back-to-top svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 700px) {
+      .navigation {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 0;
+        pointer-events: none;
+      }
+      .navigation.is-open { pointer-events: auto; }
+      .navigation ul {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        flex-direction: column;
+        justify-content: center;
+        gap: 34px;
+        width: 100%;
+        height: 100%;
+        padding: 76px 24px;
+        background: var(--black);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-14px);
+        transition: opacity .35s ease, transform .35s ease, visibility 0s linear .35s;
+      }
+      .navigation.is-open ul {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+        transition: opacity .35s ease, transform .35s ease, visibility 0s;
+      }
+      .navigation a { font-size: 18px; letter-spacing: .16em; }
+      .nav-toggle {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 2;
+        display: grid;
+        width: 46px;
+        height: 46px;
+        place-items: center;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        color: var(--white);
+        font: 400 28px/1 var(--sans);
+        cursor: pointer;
+        pointer-events: auto;
+        transition: opacity .2s ease;
+      }
+      .nav-toggle:hover { opacity: .65; }
+      .nav-toggle:focus-visible { outline: 1px solid var(--white); outline-offset: -4px; }
+      .hero-image { object-position: 57% center; }
+      .hero-shade { background: linear-gradient(180deg, rgba(0, 0, 0, .58), rgba(0, 0, 0, .3) 46%, rgba(0, 0, 0, .58)); }
+      .hero-note { right: 20px; bottom: 23px; font-size: 9px; }
+      main { padding: 0 20px; }
+      .introduction { grid-template-columns: 1fr; gap: 22px; padding: 82px 0 76px; }
+      .intro-mark, .intro-index { justify-self: center; }
+      .intro-text { max-width: 410px; }
+      .gallery { grid-template-columns: 1fr; gap: 30px; }
+      .gallery img { aspect-ratio: 5 / 4; }
+      footer { gap: 15px; font-size: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .navigation ul { transition-delay: 0s !important; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="hero" id="home">
+    <!-- Replace this image URL with Karina's own wedding photograph. -->
+    <img class="hero-image" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&amp;fit=crop&amp;w=2400&amp;q=85" alt="" fetchpriority="high">
+    <div class="hero-shade" aria-hidden="true"></div>
+    <nav class="navigation" aria-label="Navigazione principale">
+      <button class="nav-toggle" type="button" aria-label="Apri menu" aria-expanded="false" aria-controls="site-menu">☰</button>
+      <ul id="site-menu">
+        <li><a href="./index.html#home" aria-current="page">Home</a></li>
+        <li><a href="./gallery.html">Galleria</a></li>
+        <li><a href="./about.html">Chi sono</a></li>
+        <li><a href="./contact.html">Contatti</a></li>
+      </ul>
+    </nav>
+    <div class="hero-copy">
+      <h1>Karina</h1>
+      <p>Capturing Love Stories</p>
+    </div>
+    <a class="hero-note" href="#chi-sono">Fotografia di matrimonio · Italia</a>
+  </header>
+
+  <main>
+    <section class="introduction" id="chi-sono" aria-label="Introduzione" data-reveal>
+      <span class="intro-mark" aria-hidden="true">K.</span>
+      <p class="intro-text">Ogni storia d'amore ha una luce tutta sua. La cerco nei gesti spontanei, negli sguardi e nei momenti che meritano di restare, per raccontare il vostro giorno così com'è: autentico, intimo, vostro.</p>
+      <span class="intro-index">01 — La mia visione</span>
+    </section>
+
+    <section id="galleria" aria-labelledby="gallery-title">
+      <div class="gallery-heading" data-reveal>
+        <h2 id="gallery-title">Storie in immagini</h2>
+        <span>Una selezione · 2024—26</span>
+      </div>
+      <div class="gallery">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Una coppia di sposi nel giorno del matrimonio" loading="lazy">
+          <figcaption><span>Un giorno, per sempre</span><span>01</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Un momento intimo durante una cerimonia" loading="lazy">
+          <figcaption><span>La promessa</span><span>02</span></figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Dettagli e fiori di un ricevimento di nozze" loading="lazy">
+          <figcaption><span>Piccoli dettagli</span><span>03</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="contact" id="contatti" data-reveal>
+      <p>State scrivendo la vostra storia?</p>
+      <a href="mailto:hello@karina.photo">Parliamone</a>
+    </section>
+
+    <footer>
+      <span>© Karina · Fotografia</span>
+      <a href="#home">Torna all'inizio ↑</a>
+    </footer>
+  </main>
+  <a class="back-to-top" href="#top" aria-label="Torna all'inizio" title="Torna all'inizio">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" /></svg>
+  </a>
+  <script>
+    const revealTargets = document.querySelectorAll('[data-reveal], .gallery figure');
+
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('has-scroll-reveal');
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+
+      revealTargets.forEach((target) => revealObserver.observe(target));
+    }
+
+    const backToTop = document.querySelector('.back-to-top');
+    const updateBackToTop = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const triggerPoint = maxScroll > 400 ? 400 : Math.max(0, maxScroll - 24);
+      backToTop.classList.toggle('is-visible', maxScroll > 0 && (maxScroll > 400 ? window.scrollY > triggerPoint : window.scrollY >= triggerPoint));
+    };
+    window.addEventListener('scroll', updateBackToTop, { passive: true });
+    window.addEventListener('resize', updateBackToTop);
+    updateBackToTop();
+
+    const navigation = document.querySelector('.navigation');
+    const menuToggle = navigation.querySelector('.nav-toggle');
+    const menuLinks = navigation.querySelectorAll('a');
+
+    function setMenuOpen(isOpen) {
+      navigation.classList.toggle('is-open', isOpen);
+      document.body.classList.toggle('menu-open', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Chiudi menu' : 'Apri menu');
+      menuToggle.textContent = isOpen ? '×' : '☰';
+      if (isOpen) menuLinks[0].focus({ preventScroll: true });
+      else menuToggle.focus({ preventScroll: true });
+    }
+
+    menuToggle.addEventListener('click', () => setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true'));
+    menuLinks.forEach((link) => link.addEventListener('click', () => {
+      if (navigation.classList.contains('is-open')) setMenuOpen(false);
+    }));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && navigation.classList.contains('is-open')) setMenuOpen(false);
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 700 && navigation.classList.contains('is-open')) {
+        navigation.classList.remove('is-open');
+        document.body.classList.remove('menu-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Apri menu');
+        menuToggle.textContent = '☰';
+      }
+    });
+  </script>
+</body>
+</html>
